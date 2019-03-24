@@ -47,7 +47,7 @@ class HomePhotoAdapter(listener: Listener) : RecyclerView.Adapter<HomePhotoAdapt
 
             GlideApp.with(itemView)
                 .load(photo.generateImageURL())
-                .placeholder(R.drawable.sample_image)
+                .placeholder(R.drawable.loading_spinner)
                 .error(R.drawable.ic_error_outline_24dp)
                 .into(imgView)
 

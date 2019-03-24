@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener, HomePhotoAdapter.Listener {
     companion object {
-        const val DEFAULT_SEARCH_TERM = "sunrise"
+        const val DEFAULT_SEARCH_TERM = "tulips"
         const val SPAN_COUNT_LIST = 1
         const val SPAN_COUNT_GRID = 2
     }
