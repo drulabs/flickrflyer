@@ -7,8 +7,6 @@ import com.developerdru.flickflyers.data.entities.Photo
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
-import javax.inject.Inject
-import javax.inject.Named
 
 class ViewStateLiveData(
     private val repository: PhotoRepository,
@@ -32,13 +30,17 @@ class ViewStateLiveData(
         isDisposePending = false
     }
 
+    //private lateinit var viewState: ViewState<List<Photo>>
+    private lateinit var viewType: ViewType
+
     private val disposables = CompositeDisposable()
 
     private var disposableObserver = DisposableRxObserver()
 
     var photos = repository.getPhotos(DEFAULT_SEARCH_TERM, DEFAULT_PAGE_NUM)
 
-    fun setSearchParams(searchText: String, page: Int) {
+    fun setSearchParams(searchText: String, page: Int, viewType: ViewType = ViewType.LIST) {
+        this.viewType = viewType
         photos = repository.getPhotos(searchText, page)
     }
 
@@ -51,7 +53,7 @@ class ViewStateLiveData(
         if (isDisposePending) {
             disposerHandler.removeCallbacks(disposer)
         } else {
-            postValue(ViewState(null, true, null))
+            updateData(ViewState(null, true, null))
             if (disposableObserver.isDisposed) {
                 disposableObserver = DisposableRxObserver()
             }
@@ -67,12 +69,17 @@ class ViewStateLiveData(
         override fun onComplete() {}
 
         override fun onNext(pics: List<Photo>) {
-            postValue(ViewState(pics, false, null))
+            updateData(ViewState(pics, false, null))
         }
 
         override fun onError(e: Throwable) {
-            postValue(ViewState(null, false, e))
+            updateData(ViewState(null, false, e))
         }
+    }
+
+    private fun updateData(viewState: ViewState<List<Photo>>) {
+        viewState.viewType = viewType
+        postValue(viewState)
     }
 
 }

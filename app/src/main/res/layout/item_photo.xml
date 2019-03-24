@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/img_photo_source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:layout_margin="8dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        tools:src="@drawable/sample_image" />
+
+    <TextView
+        android:id="@+id/tv_photo_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        android:background="#33000000"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:padding="4dp"
+        android:textColor="#DDDDDD"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        tools:text="Sunrise at the end of the country is a sight that is bla bla bla bla bla Sunrise at the end of the country is a sight that is bla bla bla bla bla" />
+</FrameLayout>

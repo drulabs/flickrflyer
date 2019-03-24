@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Flick Flyers</string>
+    <string name="txt_error_msg">Something went wrong, please try again</string>
+    <string name="txt_menu_toggle">Toggle View</string>
+    <string name="txt_menu_search">Search</string>
+    <string name="search_hint">Search by tag</string>
 </resources>
