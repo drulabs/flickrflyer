@@ -18,11 +18,15 @@ class HomeVM(
     foregroundScheduler: Scheduler
 ) : ViewModel() {
 
+    companion object {
+        const val DEFAULT_SEARCH_TERM = "lighthouse"
+    }
+
     private val requestLiveData = MutableLiveData<PhotoRequest>()
 
     private var photosLiveData: LiveData<ViewState<List<Photo>>>
 
-    private lateinit var photoSearchRequest: PhotoRequest
+    private var photoSearchRequest = PhotoRequest(DEFAULT_SEARCH_TERM, 1)
 
     init {
         this.photosLiveData = Transformations.switchMap(requestLiveData) {
@@ -44,15 +48,20 @@ class HomeVM(
     }
 
     fun toggleView() {
-        photoSearchRequest.viewType = when(photoSearchRequest.viewType) {
+        photoSearchRequest.viewType = when (photoSearchRequest.viewType) {
             ViewType.LIST -> ViewType.GRID
             ViewType.GRID -> ViewType.LIST
         }
         requestLiveData.postValue(photoSearchRequest)
     }
 
+    fun refresh() {
+        requestLiveData.postValue(photoSearchRequest)
+    }
+
     private inner class PhotoRequest(
         var searchText: String,
         var page: Int,
-        var viewType: ViewType = ViewType.LIST)
+        var viewType: ViewType = ViewType.LIST
+    )
 }

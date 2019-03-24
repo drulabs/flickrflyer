@@ -2,6 +2,7 @@ package com.developerdru.flickflyers.ui.home
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.developerdru.flickflyers.R
 import com.developerdru.flickflyers.data.entities.Photo
 import com.developerdru.flickflyers.presentation.ViewType
+import com.developerdru.flickflyers.ui.detail.DetailsActivity
+import com.developerdru.flickflyers.utils.toJSON
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -22,7 +25,6 @@ import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener, HomePhotoAdapter.Listener {
     companion object {
-        const val DEFAULT_SEARCH_TERM = "tulips"
         const val SPAN_COUNT_LIST = 1
         const val SPAN_COUNT_GRID = 2
     }
@@ -75,12 +77,17 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener, HomePh
                 else -> {
                     progressBarHome.visibility = View.GONE
                     rvHomePhotos.visibility = View.GONE
-                    tvHomeError.visibility = View.VISIBLE
+                    tvHomeError.visibility = View.GONE
                 }
             }
         })
 
-        homeVM.searchPhotoByTag(DEFAULT_SEARCH_TERM)
+        homeVM.refresh()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        homeVM.refresh()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -115,11 +122,14 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener, HomePh
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
+        // Ignore as we are not interested in Auto complete feature
         return false
     }
 
     override fun onPhotoTapped(photo: Photo) {
-
+        val detailsIntent = Intent(this@HomeActivity, DetailsActivity::class.java)
+        detailsIntent.putExtra(DetailsActivity.KEY_PHOTO_ENTITY, photo.toJSON())
+        startActivity(detailsIntent)
     }
 
 }

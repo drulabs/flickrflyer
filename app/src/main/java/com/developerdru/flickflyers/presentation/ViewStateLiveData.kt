@@ -63,6 +63,7 @@ class ViewStateLiveData(
                     .subscribeWith(disposableObserver)
             )
         }
+        isDisposePending = false
     }
 
     private inner class DisposableRxObserver : DisposableObserver<List<Photo>>() {

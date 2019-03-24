@@ -14,7 +14,9 @@ data class Photo(
     val farm: Int,
     val title: String,
     var tag: String
-)
+) {
+    companion object
+}
 
 data class PhotoResponse(
     val page: Int,

@@ -7,4 +7,4 @@ fun Photo.generateImageURL() = "https://farm$farm.staticflickr.com/$server/${id}
 
 fun Photo.toJSON() = Gson().toJson(this)
 
-fun Photo.fromJSON(jsonRep: String) = Gson().fromJson(jsonRep, this.javaClass)
+fun Photo.Companion.fromJSON(jsonRep: String) = Gson().fromJson(jsonRep, Photo::class.java)
